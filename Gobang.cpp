@@ -1,18 +1,28 @@
 
 //According to different system modifications
-#define CLEARSCREEN 	system("cls")
-#define Keying				getch()
-#define PAUSE					system("pause")
+#define __LINUX__       linux
+//#define __WINDOWS__   windows
+
+#ifdef __LINUX__
+#define CLEARSCREEN 	system("clear")
+#define PAUSE			system("pause")
+#endif
+#ifdef __WINDOWS__
+#define CLEARSCREEN     system("cls")
+#define PAUSE           system("pause")
+#endif
 
 //Game Setting
-#define CB_Color_Space 	"¡ö"
-#define CB_Color_First 	"¡ñ"
-#define CB_Color_Second "¡ð"
-#define CB_Color_Select "[]"
-
+#define CB_Color_Space 	"\033[47;31;5m  \033[43;37;0m"
+#define CB_Color_First 	"\033[44;37;5m  \033[43;37;0m"
+#define CB_Color_Second "\033[43;37;5m  \033[43;37;0m"
+#define CB_Color_Select "\033[42;37;5m[]\033[43;37;0m"
+o apt-get install vim-youcompleteme
+vim-addons install youcompleteme
 //Operation Key Setting
+#define Keying          InputOptional()
 #define Operation_Down 	'2'
-#define Operation_Up 		'8'
+#define Operation_Up	'8'
 #define Operation_Left 	'4'
 #define Operation_Right '6'
 #define Operation_Enter '5'
@@ -29,7 +39,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<conio.h>
+//#include<curses.h>
+//#include<conio.h>
 struct Gobang {
 
 	char CB[15][15];		//Checkerboard
@@ -69,7 +80,22 @@ struct Gobang {
 			top=0;
 		};
 	}history;
-	
+   
+    char InputOptional(){
+        //Windows
+#ifdef __WINDOWS__
+       return getch();
+#endif
+        //Linux
+#ifdef  __LINUX__
+       char a,b;
+        a=getchar();
+        b=getchar();
+        if(a=='\n')return b;
+        else return a;
+#endif
+    }
+    
 	int MenuView() {
 		while(1) {
 			puts("a. AI");
@@ -79,7 +105,7 @@ struct Gobang {
 			puts("y. FAQ");
 			puts("z. About");
 			puts("Q. Quit");
-			switch(GameModel=Keying) {		//select
+			switch(Keying) {		//select
 				case 'a':GameView();AI();							break;
 				case 'b':GameView();Online();					break;
 				case 'c':GameView();PlayByYourself();CLEARSCREEN;	break;
@@ -102,6 +128,7 @@ struct Gobang {
 		printf("Blog:zjko.vip\n");
 		printf("Email:zjko@outlook.com\n");
 		PAUSE;
+        getchar();
 		CLEARSCREEN;
 	};
 	void FAQ(){
@@ -115,12 +142,11 @@ struct Gobang {
 		printf("Right:%c\n",Operation_Right);
 		printf("Enter:%c\n",Operation_Enter);
 		printf("Undo:%c\n",Operation_Undo);
-		printf("Quit:%c\n",Operation_Quit);
-		
+		printf("Quit:%c\n",Operation_Quit);	
 		PAUSE;
 		CLEARSCREEN;
 	}
-
+   
 	int GameView() {
 		CLEARSCREEN;
 		for(int i=0; i<15;i++,putchar('\n'))
