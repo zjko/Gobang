@@ -13,12 +13,19 @@
 #endif
 
 //Game Setting
+#ifdef __LINUX__
 #define CB_Color_Space 	"\033[47;31;5m  \033[43;37;0m"
 #define CB_Color_First 	"\033[44;37;5m  \033[43;37;0m"
 #define CB_Color_Second "\033[43;37;5m  \033[43;37;0m"
 #define CB_Color_Select "\033[42;37;5m[]\033[43;37;0m"
-o apt-get install vim-youcompleteme
-vim-addons install youcompleteme
+#endif
+
+#ifdef __WINDOWS__
+
+
+
+
+#endif
 //Operation Key Setting
 #define Keying          InputOptional()
 #define Operation_Down 	'2'
@@ -106,7 +113,7 @@ struct Gobang {
 			puts("z. About");
 			puts("Q. Quit");
 			switch(Keying) {		//select
-				case 'a':GameView();AI();							break;
+                case 'a':GameView();AI();							break;
 				case 'b':GameView();Online();					break;
 				case 'c':GameView();PlayByYourself();CLEARSCREEN;	break;
 				case 'x':CP = !CP;CLEARSCREEN;				break;
