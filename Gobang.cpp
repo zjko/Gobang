@@ -1,7 +1,6 @@
-
 //According to different system modifications
-#define __LINUX__       linux
-//#define __WINDOWS__   windows
+//#define __LINUX__       linux
+#define __WINDOWS__   windows
 
 #ifdef __LINUX__
 #define CLEARSCREEN 	system("clear")
@@ -21,9 +20,10 @@
 #endif
 
 #ifdef __WINDOWS__
-
-
-
+#define CB_Color_Space 	"■"
+#define CB_Color_First 	"●"
+#define CB_Color_Second "○"
+#define CB_Color_Select "＋"
 
 #endif
 //Operation Key Setting
@@ -36,18 +36,16 @@
 #define Operation_Undo 	'0'
 #define Operation_Quit 	'q'
 
-
 /*
 //Service
-#define ServiceIP
-#define ServicePort
+#define ServiceIP	127.0.0.1
+#define ServicePort	8888
 */
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-//#include<curses.h>
-//#include<conio.h>
+#include<conio.h>
 struct Gobang {
 
 	char CB[15][15];		//Checkerboard
@@ -89,11 +87,9 @@ struct Gobang {
 	}history;
    
     char InputOptional(){
-        //Windows
 #ifdef __WINDOWS__
        return getch();
 #endif
-        //Linux
 #ifdef  __LINUX__
        char a,b;
         a=getchar();
@@ -230,16 +226,14 @@ struct Gobang {
 		while(!Operation());
 	}
 	int AI() {
-
-
+		
+		MSG = "Sorry, this pattern is being developed";
+		return 0;
 	};
 	int Online(){
 		
-
-
-
-
-			return 0; 
+		MSG = "Sorry, this pattern is being developed";
+		return 0; 
 		}
 	int init(){
 		for(int i=0;i<15;i++)
@@ -248,14 +242,10 @@ struct Gobang {
 		position.init();
 		history.init();
 		MenuView();
-	};
-		
+	};	
 };
-
 int main(){
 	struct Gobang game;
 	game.init();
 	
 }
-
-
