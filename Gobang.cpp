@@ -1,14 +1,7 @@
 #include<stdio.h> 
 #include<string.h>
 #include<stdlib.h>
-//#include"public.h"
-
-
-
-//Service
-#define ServiceIP	127.0.0.1
-#define ServicePort	6517
-
+#include"public.h"
 
 //According to different system modifications
 //#define __LINUX__       
