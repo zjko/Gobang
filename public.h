@@ -34,7 +34,7 @@ struct MSG_Optional{
 		union{
 			struct Position p;		//
 			
-		}content:4; 
+		}content; 
 		int undefine:16;
 		
 		int setNext() {
