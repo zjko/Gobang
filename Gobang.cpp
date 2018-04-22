@@ -1,10 +1,21 @@
-//According to different system modifications
-//#define __LINUX__       linux
-#define __WINDOWS__   windows
+#include<stdio.h> 
+#include<string.h>
+#include<stdlib.h>
+//#include"public.h"
 
+
+
+//Service
+#define ServiceIP	127.0.0.1
+#define ServicePort	6517
+
+
+//According to different system modifications
+//#define __LINUX__       
+#define __WINDOWS__   
 #ifdef __LINUX__
 #define CLEARSCREEN 	system("clear")
-#define PAUSE			system("pause")
+#define PAUSE					system("pause")
 #endif
 #ifdef __WINDOWS__
 #define CLEARSCREEN     system("cls")
@@ -24,28 +35,32 @@
 #define CB_Color_First 	"●"
 #define CB_Color_Second "○"
 #define CB_Color_Select "＋"
-
 #endif
+
 //Operation Key Setting
 #define Keying          InputOptional()
+#define Operation_Up		'8'
 #define Operation_Down 	'2'
-#define Operation_Up	'8'
 #define Operation_Left 	'4'
 #define Operation_Right '6'
 #define Operation_Enter '5'
 #define Operation_Undo 	'0'
 #define Operation_Quit 	'q'
 
-/*
-//Service
-#define ServiceIP	127.0.0.1
-#define ServicePort	8888
-*/
-
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#ifdef __LINUX__
+#include <errno.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#endif
+ 
+#ifdef __WINDOWS__ 
 #include<conio.h>
+#endif
+
 struct Gobang {
 
 	char CB[15][15];		//Checkerboard
@@ -57,6 +72,13 @@ struct Gobang {
 		int init(){
 			x=0;y=0;
 		};
+		int setVal(int a,int b){
+			if(a>=0&&a<15&&b>=0&&b<15){
+				x=a;
+				y=b;
+				return 0;
+			}else return -1;
+		} ;
 	} position;
 	
 	struct History{
@@ -98,9 +120,10 @@ struct Gobang {
         else return a;
 #endif
     }
-    
+
 	int MenuView() {
 		while(1) {
+			
 			puts("a. AI");
 			puts("b. Online");
 			puts("c. Player by Yourself");
@@ -191,7 +214,7 @@ struct Gobang {
 
 	int Operation() {
 		//return 0 is normal  other  is  option
-		
+
 		while(1){
 //			printf("x %d y %d\n",position.x,position.y);
 			switch(Keying) {
@@ -226,13 +249,14 @@ struct Gobang {
 		while(!Operation());
 	}
 	int AI() {
-		
 		MSG = "Sorry, this pattern is being developed";
 		return 0;
 	};
 	int Online(){
+	
 		
-		MSG = "Sorry, this pattern is being developed";
+		
+		
 		return 0; 
 		}
 	int init(){
@@ -247,5 +271,4 @@ struct Gobang {
 int main(){
 	struct Gobang game;
 	game.init();
-	
 }
