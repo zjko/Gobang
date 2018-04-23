@@ -141,11 +141,4 @@ struct Connection{
 	};
 	
 	
-	
-	
-<<<<<<< HEAD
-};
-#endif
-=======
-#endif
->>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
+#endif	
