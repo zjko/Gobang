@@ -3,6 +3,17 @@
 #define	SERVER_PORT	8000
 #define SERVER_IP		"39.106.146.7"
 
+
+
+#include<stdio.h>  
+#include<stdlib.h>  
+#include<errno.h>  
+#include<string.h>  
+#include<sys/types.h>  
+#include<netinet/in.h>  
+#include<sys/socket.h>  
+#include<sys/wait.h>  
+#include<arpa/inet.h>
 struct Position{
 		unsigned int x:4;
 		unsigned int y:4;
@@ -27,21 +38,22 @@ struct MSG_Optional{
 		20:		request Undo
 		21:		Allow Undo
 		22:		Refuse undo
-		--100:	chat Message	
+		100:	chat Message	
 		Other undefine
 	*/
-		const int comm:8;	//External read-only
+		const int comm;	//External read-only
 		union{
 			struct Position p;		//
-			
+			char chat[256];
 		}content; 
-		int undefine:16;
 		
-		int setNext() {
+		
+		int setNext(struct Position v) {
+			content.p.setVal(v.x,v.y);
 			
 		}
 		int setComm(int v){
-			int * p = &comm;
+			int * p = (int *)&comm;
 			if(v>=0&&v<256){
 				*p=v;
 				printf("comm:%d",comm);
@@ -51,27 +63,27 @@ struct MSG_Optional{
 		
 		int setGameStart() {
 		//	10:		Game start
-		int * p = &comm;
+		int * p =(int *) &comm;
 		*p = 10;	
 		};
 		int setGameOver() {
 		//	11:		Game start
-		int * p = &comm;
+		int * p = (int *)&comm;
 		*p = 11;	
 		};
 		int setUndo() {
 		//	20:		request undo
-		int * p = &comm;
+		int * p =(int *) &comm;
 		*p = 20;	
 		};
 		int setAllowUndo() {
 		//	21:		AllowUndo
-		int * p = &comm;
+		int * p = (int *)&comm;
 		*p = 21;	
 		};
 		int setRefuseUndo(){
 		//	22:		Refuse undo
-		int * p = &comm;
+		int * p = (int *)&comm;
 		*p = 22;	
 		};
 
@@ -88,9 +100,9 @@ struct Connection{
 	int len;										//length
 	
 	int getConnect() {
-		if((sockaddr=socket(AF_INET,SOCK_STREAM,0)) == -1){
+		if((fd=socket(AF_INET,SOCK_STREAM,0)) == -1){
 			perror("socket");
-			exit(1;)
+			exit(1);
 		}
 		sockaddr.sin_family = AF_INET;
 		sockaddr.sin_port = htons(SERVER_PORT);
@@ -105,7 +117,7 @@ struct Connection{
 	};
 	int sendOptional(){
 		
-		    numbytes = send(sockfd, "12345", 10, 0);
+		    numbytes = send(fd, "12345", 10, 0);
 		
 	};	
 	int sendChat(){
@@ -113,7 +125,8 @@ struct Connection{
 	};	
 	
 	int recvMSG(){
-		  numbytes = recv(fd, buf, BUFSIZ, 0);
+		char buf[200];
+		  numbytes = recv(fd, buf, 100, 0);
 		
 	};
 	
@@ -123,5 +136,4 @@ struct Connection{
 	
 	
 	
-};
 #endif
