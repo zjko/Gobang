@@ -1,7 +1,7 @@
 
 //According to different system modifications
 #define CLEARSCREEN 	system("cls")
-#define Keying				getch()
+#define Keying				InputOptional()
 #define PAUSE					system("pause")
 
 //Game Setting
@@ -70,6 +70,18 @@ struct Gobang {
 		};
 	}history;
 	
+		char InputOptional(){
+		//Windows
+		//return getch();
+		//Linux
+		char a,b;
+		a=getchar();
+		b=getchar();
+		
+		if(a=='\n')return b;
+		else return a;	
+	}; 
+	
 	int MenuView() {
 		while(1) {
 			puts("a. AI");
@@ -79,7 +91,7 @@ struct Gobang {
 			puts("y. FAQ");
 			puts("z. About");
 			puts("Q. Quit");
-			switch(GameModel=Keying) {		//select
+			switch(Keying) {		//select
 				case 'a':GameView();AI();							break;
 				case 'b':GameView();Online();					break;
 				case 'c':GameView();PlayByYourself();CLEARSCREEN;	break;
@@ -119,7 +131,9 @@ struct Gobang {
 		
 		PAUSE;
 		CLEARSCREEN;
-	}
+	};
+	
+
 
 	int GameView() {
 		CLEARSCREEN;
