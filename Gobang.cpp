@@ -1,35 +1,64 @@
+#include<stdio.h> 
+#include<string.h>
+#include<stdlib.h>
+#include"public.h"
 
 //According to different system modifications
+<<<<<<< HEAD
 #define CLEARSCREEN 	system("cls")
 #define Keying				InputOptional()
+=======
+//#define __LINUX__       
+#define __WINDOWS__   
+#ifdef __LINUX__
+#define CLEARSCREEN 	system("clear")
+>>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 #define PAUSE					system("pause")
+#endif
+#ifdef __WINDOWS__
+#define CLEARSCREEN     system("cls")
+#define PAUSE           system("pause")
+#endif
 
 //Game Setting
-#define CB_Color_Space 	"°ˆ"
-#define CB_Color_First 	"°Ò"
-#define CB_Color_Second "°"
-#define CB_Color_Select "[]"
+#ifdef __LINUX__
+#define CB_Color_Space 	"\033[47;31;5m  \033[43;37;0m"
+#define CB_Color_First 	"\033[44;37;5m  \033[43;37;0m"
+#define CB_Color_Second "\033[43;37;5m  \033[43;37;0m"
+#define CB_Color_Select "\033[42;37;5m[]\033[43;37;0m"
+#endif
+
+#ifdef __WINDOWS__
+#define CB_Color_Space 	"‚ñ†"
+#define CB_Color_First 	"‚óè"
+#define CB_Color_Second "‚óã"
+#define CB_Color_Select "Ôºã"
+#endif
 
 //Operation Key Setting
+#define Keying          InputOptional()
+#define Operation_Up		'8'
 #define Operation_Down 	'2'
-#define Operation_Up 		'8'
 #define Operation_Left 	'4'
 #define Operation_Right '6'
 #define Operation_Enter '5'
 #define Operation_Undo 	'0'
 #define Operation_Quit 	'q'
 
-
-/*
-//Service
-#define ServiceIP
-#define ServicePort
-*/
-
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#ifdef __LINUX__
+#include <errno.h>
+#include <netdb.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#endif
+ 
+#ifdef __WINDOWS__ 
 #include<conio.h>
+#endif
+
 struct Gobang {
 
 	char CB[15][15];		//Checkerboard
@@ -41,6 +70,13 @@ struct Gobang {
 		int init(){
 			x=0;y=0;
 		};
+		int setVal(int a,int b){
+			if(a>=0&&a<15&&b>=0&&b<15){
+				x=a;
+				y=b;
+				return 0;
+			}else return -1;
+		} ;
 	} position;
 	
 	struct History{
@@ -69,6 +105,7 @@ struct Gobang {
 			top=0;
 		};
 	}history;
+<<<<<<< HEAD
 	
 		char InputOptional(){
 		//Windows
@@ -82,8 +119,25 @@ struct Gobang {
 		else return a;	
 	}; 
 	
+=======
+   
+    char InputOptional(){
+#ifdef __WINDOWS__
+       return getch();
+#endif
+#ifdef  __LINUX__
+       char a,b;
+        a=getchar();
+        b=getchar();
+        if(a=='\n')return b;
+        else return a;
+#endif
+    }
+
+>>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 	int MenuView() {
 		while(1) {
+			
 			puts("a. AI");
 			puts("b. Online");
 			puts("c. Player by Yourself");
@@ -92,7 +146,11 @@ struct Gobang {
 			puts("z. About");
 			puts("Q. Quit");
 			switch(Keying) {		//select
+<<<<<<< HEAD
 				case 'a':GameView();AI();							break;
+=======
+                case 'a':GameView();AI();							break;
+>>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 				case 'b':GameView();Online();					break;
 				case 'c':GameView();PlayByYourself();CLEARSCREEN;	break;
 				case 'x':CP = !CP;CLEARSCREEN;				break;
@@ -114,6 +172,7 @@ struct Gobang {
 		printf("Blog:zjko.vip\n");
 		printf("Email:zjko@outlook.com\n");
 		PAUSE;
+        getchar();
 		CLEARSCREEN;
 	};
 	void FAQ(){
@@ -127,14 +186,18 @@ struct Gobang {
 		printf("Right:%c\n",Operation_Right);
 		printf("Enter:%c\n",Operation_Enter);
 		printf("Undo:%c\n",Operation_Undo);
-		printf("Quit:%c\n",Operation_Quit);
-		
+		printf("Quit:%c\n",Operation_Quit);	
 		PAUSE;
 		CLEARSCREEN;
+<<<<<<< HEAD
 	};
 	
 
 
+=======
+	}
+   
+>>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 	int GameView() {
 		CLEARSCREEN;
 		for(int i=0; i<15;i++,putchar('\n'))
@@ -176,7 +239,7 @@ struct Gobang {
 
 	int Operation() {
 		//return 0 is normal  other  is  option
-		
+
 		while(1){
 //			printf("x %d y %d\n",position.x,position.y);
 			switch(Keying) {
@@ -211,16 +274,15 @@ struct Gobang {
 		while(!Operation());
 	}
 	int AI() {
-
-
+		MSG = "Sorry, this pattern is being developed";
+		return 0;
 	};
 	int Online(){
+	
 		
-
-
-
-
-			return 0; 
+		
+		
+		return 0; 
 		}
 	int init(){
 		for(int i=0;i<15;i++)
@@ -229,14 +291,9 @@ struct Gobang {
 		position.init();
 		history.init();
 		MenuView();
-	};
-		
+	};	
 };
-
 int main(){
 	struct Gobang game;
 	game.init();
-	
 }
-
-
