@@ -4,19 +4,16 @@
 #include"public.h"
 
 //According to different system modifications
-<<<<<<< HEAD
 #define CLEARSCREEN 	system("cls")
 #define Keying				InputOptional()
-=======
 //#define __LINUX__       
 #define __WINDOWS__   
 #ifdef __LINUX__
 #define CLEARSCREEN 	system("clear")
->>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 #define PAUSE					system("pause")
 #endif
 #ifdef __WINDOWS__
-#define CLEARSCREEN     system("cls")
+#define CLEARSCREEN     system("clear")
 #define PAUSE           system("pause")
 #endif
 
@@ -105,36 +102,21 @@ struct Gobang {
 			top=0;
 		};
 	}history;
-<<<<<<< HEAD
 	
-		char InputOptional(){
-		//Windows
-		//return getch();
-		//Linux
-		char a,b;
-		a=getchar();
-		b=getchar();
-		
-		if(a=='\n')return b;
-		else return a;	
-	}; 
-	
-=======
-   
     char InputOptional(){
 #ifdef __WINDOWS__
        return getch();
 #endif
+
 #ifdef  __LINUX__
        char a,b;
-        a=getchar();
-        b=getchar();
-        if(a=='\n')return b;
-        else return a;
+       a=getchar();
+       b=getchar();
+       if(a=='\n')return b;
+       else return a;
 #endif
-    }
+    };
 
->>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 	int MenuView() {
 		while(1) {
 			
@@ -146,11 +128,7 @@ struct Gobang {
 			puts("z. About");
 			puts("Q. Quit");
 			switch(Keying) {		//select
-<<<<<<< HEAD
-				case 'a':GameView();AI();							break;
-=======
                 case 'a':GameView();AI();							break;
->>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 				case 'b':GameView();Online();					break;
 				case 'c':GameView();PlayByYourself();CLEARSCREEN;	break;
 				case 'x':CP = !CP;CLEARSCREEN;				break;
@@ -189,15 +167,8 @@ struct Gobang {
 		printf("Quit:%c\n",Operation_Quit);	
 		PAUSE;
 		CLEARSCREEN;
-<<<<<<< HEAD
 	};
 	
-
-
-=======
-	}
-   
->>>>>>> 285a2bac7ddba6f17b77ff886ac428997982c8a8
 	int GameView() {
 		CLEARSCREEN;
 		for(int i=0; i<15;i++,putchar('\n'))
