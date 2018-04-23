@@ -106,9 +106,9 @@ struct Connection{
 	
 	int getConnect() {
 
-		if((sockaddr=socket(AF_INET,SOCK_STREAM,0)) == -1){
+		if((fd=socket(AF_INET,SOCK_STREAM,0)) == -1){
 			perror("socket");
-			exit(1;)
+			exit(1);
 		}
 		
 		sockaddr.sin_family = AF_INET;
@@ -124,7 +124,7 @@ struct Connection{
 		puts("connect Sucess!!");
 	};
 	int sendOptional(){
-		    numbytes = send(sockfd, "12345", 10, 0);
+		    numbytes = send(fd, "12345", 10, 0);
 		
 	};	
 	int sendChat(){
