@@ -109,7 +109,7 @@ struct Connection{
 		sockaddr.sin_addr.s_addr = inet_addr(SERVER_IP);
 		bzero(&(sockaddr.sin_zero),8);
 		
-		if(connect(fd,(struct sockaddr *)&socket,sizeof(struct sockaddr))==-1){
+		if(connect(fd,(struct sockaddr *)&sockaddr,sizeof(struct sockaddr))==-1){
 			perror("connect");
 			exit(1);
 		}
