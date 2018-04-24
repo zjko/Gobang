@@ -40,7 +40,7 @@ struct Position{
 		} ;
 	};
 	
-struct MSG_Optional{
+struct MSG{
 	/*
 		comm Provide 256 States
 		0:		
